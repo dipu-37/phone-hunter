@@ -6,14 +6,29 @@ const loadPhone = async (searchText) => {
    // console.log(phones);
   }
   
-const displayphone = phoens =>{
+const displayphone = phones =>{
 
     // 1 get the id 
     const phonecontainer = document.getElementById('phone-container');
     // remove old searach result 
     phonecontainer.textContent ='';
-   // console.log(phoens)
-   phoens.forEach(phone => {
+
+    // display show all button if there are more than 10 phone; 
+
+    const showallcontainer = document.getElementById('show_all_container');
+    if(phones.length > 10){
+        showallcontainer.classList.remove('hidden');
+    }
+    else{
+        showallcontainer.classList.add('hidden');
+    }
+
+    // display only frist ten phone 
+    phones = phones.slice(0,10);
+
+    console.log(phones.length)
+   // console.log(phones)
+   phones.forEach(phone => {
         //console.log(phone)
          // 2 crreate a div
     const phonecard = document.createElement('div');
