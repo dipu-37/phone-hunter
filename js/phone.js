@@ -3,7 +3,7 @@ const loadPhone = async (searchText) => {
     const data = await response.json();
     const phones = data.data;
     displayphone(phones);
-   // console.log(phones);
+    console.log(phones);
   }
   
 const displayphone = phones =>{
@@ -40,7 +40,7 @@ const displayphone = phones =>{
         <h2 class="card-title">${phone.phone_name}</h2>
         <p>If a dog chews shoes whose shoes does he choose?</p>
         <div class="card-actions justify-end">
-        <button class="btn btn-primary">Buy Now</button>
+        <button onclick="handleShowdetails('${phone.slug}')" class="btn btn-primary">Show Details</button>
         </div>
     </div>
     `
@@ -48,11 +48,26 @@ const displayphone = phones =>{
     phonecontainer.appendChild(phonecard);
     });
 
+    // hide loading spnneer 
+    toggleloadingSpineer(false);
+
 }
  
+
+const handleShowdetails = async (id) => {
+    console.log('click shoe details', id);
+    const res = await fetch(` https://openapi.programming-hero.com/api/phone/${id}`);
+    const data = await res.json();
+    console.log(data);
+}
+
+
+
+
 // handle search button ?
  
 function handleSearch(){
+    toggleloadingSpineer(true);
     const search_field = document.getElementById('searchField');
     const search_text =search_field.value;
     console.log(search_text)
@@ -60,5 +75,16 @@ function handleSearch(){
 }
 
 
+const toggleloadingSpineer = (isLoading)  => {
+    const loading_spineer = document.getElementById('loadingSpinerr');
+   
+    if(isLoading){
+        loading_spineer.classList.remove('hidden');
+    } 
+    else{
+        loading_spineer.classList.add('hidden')
+    }
+
+}
 
 //   loadPhone();
