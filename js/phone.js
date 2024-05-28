@@ -1,9 +1,9 @@
-const loadPhone = async (searchText) => {
+const loadPhone = async (searchText='13') => {
     const response = await fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`);
     const data = await response.json();
     const phones = data.data;
     displayphone(phones);
-    console.log(phones);
+   // console.log(phones);
   }
   
 const displayphone = phones =>{
@@ -26,7 +26,7 @@ const displayphone = phones =>{
     // display only frist ten phone 
     phones = phones.slice(0,10);
 
-    console.log(phones.length)
+    //console.log(phones.length)
    // console.log(phones)
    phones.forEach(phone => {
         //console.log(phone)
@@ -58,9 +58,25 @@ const handleShowdetails = async (id) => {
     console.log('click shoe details', id);
     const res = await fetch(` https://openapi.programming-hero.com/api/phone/${id}`);
     const data = await res.json();
-    console.log(data);
+    // console.log(data);
+    const phone = data.data;
+    showPhoneModal(phone);
 }
+const showPhoneModal = (phone) => {
+    console.log(phone);
+    const phoneName = document.getElementById('show_details_Phone_name');
+    phoneName.innerHTML = phone.name;
 
+    const showdetailscontainer = document.getElementById('show_details_container');
+    showdetailscontainer.innerHTML=`
+    <img src="${phone.image}" alt="">
+    <p><span>storage:</span> ${phone?.mainFeatures?.storage}</p>
+    <p><span>GPS:</span> ${phone?.others?.GPS}</p>
+    `
+    
+    // show the modal 
+    showDetails_modal.showModal();
+}
 
 
 
@@ -70,7 +86,7 @@ function handleSearch(){
     toggleloadingSpineer(true);
     const search_field = document.getElementById('searchField');
     const search_text =search_field.value;
-    console.log(search_text)
+    //console.log(search_text)
     loadPhone(search_text);
 }
 
@@ -87,4 +103,6 @@ const toggleloadingSpineer = (isLoading)  => {
 
 }
 
-//   loadPhone();
+
+
+loadPhone();
